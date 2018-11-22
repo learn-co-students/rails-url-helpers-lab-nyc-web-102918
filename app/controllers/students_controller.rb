@@ -1,6 +1,6 @@
 class StudentsController < ApplicationController
   before_action :set_student, only: :show
-  
+
   def index
     @students = Student.all
   end
@@ -8,9 +8,18 @@ class StudentsController < ApplicationController
   def show
   end
 
-  private
+  def set_student
+    @student = Student.find_by(id: params[:id])
+    if @student
+      if @student.active
+        @student.update(active: false)
+      render :show
+      else
+      @student.update(active: false)
+      render :show
 
-    def set_student
-      @student = Student.find(params[:id])
+      end
+    else "Student not found"
     end
+  end
 end
